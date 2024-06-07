@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-//import './App.css'
 import React from 'react'
-import Todos from './components/Todos';  // Lalukan Import
+import Todos from './components/Todos';
+import TodoForm from './components/TodoForm'
 
 function App() {
   const [todos, setTodos] = useState([
@@ -24,7 +22,7 @@ function App() {
     },
   ])
 
-  console.log(todos)
+  //console.log(todos)
 
   const toggleCompleted = (todoId) => {
     const updatedTodos = todos.map((todo) => {
@@ -41,10 +39,30 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  const addTodo = (todoTitle) => {
+    if (todoTitle === '') {
+      return
+    }
+
+    const newTodo = {
+      id: todos.length + 1,
+      title: todoTitle,
+      completed: false,
+    }
+
+    const updatedTodos = todos.concat(newTodo)
+    setTodos(updatedTodos)
+  }
+
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>My Todo List</h1>
-      <Todos todos={todos} toggleCompleted={toggleCompleted} deleteTodo={deleteTodo} />
+      <TodoForm addTodo={addTodo} />
+      <Todos 
+        todos={todos} 
+        toggleCompleted={toggleCompleted} 
+        deleteTodo={deleteTodo} 
+      />
     </div>
   )
 }
